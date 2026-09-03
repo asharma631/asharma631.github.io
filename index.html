@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aishani Sharma · Brand &amp; Marketing Communications</title>
+<meta name="description" content="Aishani Sharma builds the brand and the platform it runs on. Brand and marketing communications across luxury, fashion and lifestyle. Gurugram, Delhi NCR.">
+<meta name="author" content="Aishani Sharma">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Aishani Sharma · Brand &amp; Marketing Communications">
+<meta property="og:description" content="Marketing professional who builds both the brand and the platform it runs on.">
+<meta property="og:image" content="assets/aishani.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0910">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0910'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' fill='%23FF2E88' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* ground */
+  --void:#0B0910;
+  --ink-2:#141020;
+  --ink-3:#1E1729;
+  --line:rgba(245,241,234,.13);
+  --line-2:rgba(245,241,234,.07);
+
+  /* type */
+  --bone:#F5F1EA;
+  --bone-dim:#A9A0B4;
+
+  /* accents */
+  --fuchsia:#FF2E88;
+  --analyst:#4C7DFF;
+  --fuchsia-dp:#D6156B;
+  --gold:#E8B455;
+  --lilac:#C4B0F5;
+
+  --display:'DM Serif Display',Didot,'Times New Roman',serif;
+  --editorial:'DM Serif Display',Didot,'Times New Roman',serif;
+  --body:'Inter Tight',system-ui,-apple-system,sans-serif;
+  --label:'Jost',system-ui,sans-serif;
+
+  --gut:clamp(20px,5vw,76px);
+  --stack:clamp(76px,11vw,150px);
+  --ease:cubic-bezier(.22,.68,.28,1);
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--body);
+  background:var(--void);
+  color:var(--bone);
+  font-size:16px;line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--fuchsia);color:var(--void)}
+:focus-visible{outline:2px solid var(--fuchsia);outline-offset:4px;border-radius:2px}
+
+.wrap{max-width:1320px;margin:0 auto;padding-inline:var(--gut)}
+
+/* grain + ambient glow */
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.progress{
+  position:fixed;top:0;left:0;height:2px;width:100%;z-index:120;
+  background:linear-gradient(90deg,var(--fuchsia),var(--gold));
+  transform:scaleX(0);transform-origin:left;
+}
+
+/* ---------- type utils ---------- */
+.eyebrow{
+  font-family:var(--label);font-size:11px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--fuchsia);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--fuchsia)}
+.sec-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:28px;flex-wrap:wrap;
+  padding-bottom:22px;border-bottom:1px solid var(--line);
+  margin-bottom:clamp(40px,6vw,72px);
+}
+.sec-title{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(30px,5vw,64px);line-height:1;letter-spacing:-.008em;
+  text-transform:uppercase;margin-top:16px;
+}
+.sec-title i{font-family:var(--editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.01em;color:var(--gold)}
+.sec-note{font-family:var(--label);font-size:11px;letter-spacing:.05em;color:var(--bone-dim);max-width:32ch;line-height:1.8}
+.sec{padding-block:var(--stack)}
+.sec-tight{padding-block:clamp(60px,8vw,110px)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px var(--gut);transition:background .35s,padding .35s,box-shadow .35s;
+}
+.nav.is-stuck{
+  background:rgba(11,9,16,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  padding-block:13px;box-shadow:0 1px 0 var(--line);
+}
+.nav-mark{font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.04em}
+.nav-mark span{color:var(--fuchsia)}
+.nav-list{display:flex;gap:30px;align-items:center}
+.nav-list a{
+  font-family:var(--label);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--bone-dim);position:relative;padding:6px 0;transition:color .25s;
+}
+.nav-list a::after{
+  content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;
+  background:var(--fuchsia);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease);
+}
+.nav-list a:hover{color:var(--bone)}
+.nav-list a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-toggle{display:none;padding:10px;margin:-10px}
+.nav-toggle span{display:block;width:20px;height:1.5px;background:var(--bone);margin:5px 0;transition:transform .3s var(--ease),opacity .2s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-top:clamp(116px,16vw,178px);padding-bottom:clamp(56px,8vw,96px);overflow:hidden}
+.hero-glow{
+  position:absolute;width:min(90vw,900px);aspect-ratio:1;border-radius:50%;
+  left:0;top:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(255,46,136,.17),rgba(196,176,245,.07) 42%,transparent 68%);
+  filter:blur(30px);will-change:transform;
+}
+.hero .wrap{position:relative;z-index:2}
+.hero-eyebrow{margin-bottom:clamp(24px,3.4vw,38px)}
+.hero-name{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(40px,16vw,208px);line-height:.9;letter-spacing:-.018em;
+  text-transform:uppercase;
+}
+.hero-name .ln{display:block;overflow:hidden;padding-bottom:.06em;white-space:nowrap}
+.hero-name .ch{display:inline-block}
+.hero-name .l2{font-style:italic;font-weight:400;color:var(--gold);letter-spacing:.005em}
+.hero-rule{height:2px;background:linear-gradient(90deg,var(--fuchsia),var(--gold) 60%,transparent);margin:clamp(26px,3.6vw,44px) 0 clamp(32px,4.6vw,54px);transform-origin:left}
+
+.hero-grid{display:grid;grid-template-columns:minmax(0,296px) minmax(0,1fr);gap:clamp(28px,5vw,76px);align-items:start}
+.hero-portrait{position:relative;overflow:hidden;border:1px solid var(--line)}
+.hero-portrait img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.9);transition:filter .7s var(--ease);will-change:transform}
+.hero-portrait::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,46,136,.34),transparent 46%,rgba(196,176,245,.24));
+  mix-blend-mode:overlay;transition:opacity .7s var(--ease);
+}
+.hero-portrait:hover img{filter:grayscale(0) contrast(1) brightness(1)}
+.hero-portrait:hover::after{opacity:0}
+.hero-cap{font-family:var(--label);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--bone-dim);margin-top:12px}
+
+.hero-lede{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(23px,3vw,40px);line-height:1.2;letter-spacing:-.005em;
+  max-width:17ch;margin-bottom:clamp(30px,4vw,44px);
+}
+.hero-lede i{font-family:var(--editorial);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--gold)}
+
+/* field rail: signature device */
+.fields{border-top:1px solid var(--line)}
+.field{display:grid;grid-template-columns:126px minmax(0,1fr);gap:22px;padding:12px 0;border-bottom:1px solid var(--line-2);align-items:baseline}
+.fk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+.fv{font-size:14.5px;font-weight:500;line-height:1.6}
+.fv .live{color:var(--fuchsia);font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--fuchsia);flex:none;box-shadow:0 0 0 0 rgba(255,46,136,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,46,136,.55)}70%{box-shadow:0 0 0 9px rgba(255,46,136,0)}100%{box-shadow:0 0 0 0 rgba(255,46,136,0)}}
+
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(30px,4vw,42px)}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:11px;
+  font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:16px 28px;min-height:48px;border:1px solid var(--line);overflow:hidden;isolation:isolate;
+  transition:color .3s var(--ease),border-color .3s var(--ease);will-change:transform;
+}
+.btn svg{width:13px;height:13px;flex:none;transition:transform .35s var(--ease)}
+.btn::before{content:'';position:absolute;inset:0;z-index:-1;transform:translateY(101%);transition:transform .42s var(--ease)}
+.btn:hover::before{transform:translateY(0)}
+.btn-fill{background:var(--fuchsia);color:var(--void);border-color:var(--fuchsia);font-weight:600}
+.btn-fill::before{background:var(--bone)}
+.btn-fill:hover{color:var(--void);border-color:var(--bone)}
+.btn-fill:hover svg{transform:translateX(5px)}
+.btn-line{color:var(--bone)}
+.btn-line::before{background:var(--bone)}
+.btn-line:hover{color:var(--void);border-color:var(--bone)}
+.btn-line:hover svg{transform:translateY(4px)}
+
+/* ---------- marquee ---------- */
+.marquee{background:var(--fuchsia);color:var(--void);padding:19px 0;overflow:hidden;position:relative;z-index:2;border-block:1px solid var(--fuchsia)}
+.mq-track{display:flex;width:max-content;animation:slide 46s linear infinite;will-change:transform}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-track span{font-family:var(--display);font-weight:400;font-size:clamp(15px,1.8vw,22px);letter-spacing:.02em;text-transform:uppercase;padding-inline:26px;display:inline-flex;align-items:center;gap:52px;white-space:nowrap}
+.mq-track span::after{content:'';width:7px;height:7px;background:var(--void);border-radius:50%;flex:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- thesis ---------- */
+.thesis-quote{font-family:var(--display);font-weight:400;font-size:clamp(25px,4.3vw,58px);line-height:1.14;letter-spacing:-.008em;max-width:19ch}
+.thesis-quote i{font-family:var(--editorial);font-style:italic;font-weight:400;letter-spacing:-.008em;
+  background:linear-gradient(96deg,var(--fuchsia),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.thesis-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,5vw,76px);margin-top:clamp(36px,5vw,58px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--line)}
+.thesis-body p{color:var(--bone-dim);font-size:15.5px;line-height:1.85}
+.thesis-body strong{color:var(--bone);font-weight:600}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--void);padding:30px 24px 26px;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--fuchsia);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.stat:hover::after{transform:scaleX(1)}
+.stat dt{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.6vw,58px);line-height:.95;letter-spacing:-.01em;color:var(--gold)}
+.stat dt sub{font-size:.42em;vertical-align:baseline;color:var(--bone-dim);font-weight:700;margin-left:3px}
+.stat dd{font-family:var(--label);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--bone-dim);margin-top:14px;line-height:1.6}
+
+/* ---------- work accordion ---------- */
+.roles{border-top:1px solid var(--line)}
+.role{border-bottom:1px solid var(--line);position:relative}
+.role-head{
+  width:100%;display:grid;grid-template-columns:98px minmax(0,1fr) auto;
+  gap:clamp(16px,3vw,44px);align-items:center;text-align:left;
+  padding:clamp(22px,3vw,32px) 0;position:relative;z-index:2;
+}
+.role::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,46,136,.11),transparent 68%);opacity:0;transition:opacity .4s var(--ease);pointer-events:none}
+.role:hover::before,.role.is-open::before{opacity:1}
+.role-yr{font-family:var(--label);font-size:12px;letter-spacing:.1em;color:var(--bone-dim);transition:color .3s}
+.role:hover .role-yr,.role.is-open .role-yr{color:var(--fuchsia)}
+.role-org{display:block;font-family:var(--display);font-weight:400;font-size:clamp(21px,3.4vw,42px);line-height:1.08;letter-spacing:-.008em;text-transform:uppercase;transition:transform .45s var(--ease)}
+.role:hover .role-org{transform:translateX(9px)}
+.role-title{display:block;font-family:var(--label);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);margin-top:9px}
+.role-ic{
+  width:44px;height:44px;flex:none;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;transition:background .35s var(--ease),border-color .35s var(--ease),transform .45s var(--ease);
+}
+.role-ic svg{width:13px;height:13px;transition:transform .4s var(--ease)}
+.role:hover .role-ic{border-color:var(--fuchsia)}
+.role.is-open .role-ic{background:var(--fuchsia);border-color:var(--fuchsia);transform:rotate(180deg)}
+.role.is-open .role-ic svg{color:var(--void)}
+.role-panel{overflow:hidden;height:0;position:relative;z-index:2}
+.role-inner{display:grid;grid-template-columns:98px minmax(0,1fr);gap:clamp(16px,3vw,44px);padding-bottom:clamp(30px,4vw,46px)}
+.role-meta{border-top:1px solid var(--line-2)}
+.role-meta .field{grid-template-columns:1fr;gap:3px;padding:9px 0}
+.role-meta .fv{font-size:12.5px;font-weight:400;color:var(--bone-dim)}
+.role-points{display:grid;gap:14px;max-width:74ch}
+.role-points li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.78;color:var(--bone-dim)}
+.role-points li::before{content:'';position:absolute;left:0;top:.7em;width:12px;height:1px;background:var(--fuchsia)}
+.role-points strong{color:var(--bone);font-weight:600}
+.ext{color:var(--gold);display:inline-flex;align-items:center;gap:6px;background-image:linear-gradient(var(--gold),var(--gold));background-size:0% 1px;background-repeat:no-repeat;background-position:left bottom;padding-bottom:2px;transition:background-size .38s var(--ease)}
+.ext:hover{background-size:100% 1px}
+.role-visit{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font-family:var(--label);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--void);background:var(--gold);padding:13px 20px;min-height:44px;transition:background .3s var(--ease),gap .3s var(--ease)}
+.role-visit:hover{background:var(--bone);gap:15px}
+.role-visit svg{width:12px;height:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.tag{font-family:var(--label);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--bone-dim);border:1px solid var(--line);padding:7px 12px;transition:color .3s,border-color .3s,background .3s}
+.tag:hover{color:var(--void);background:var(--gold);border-color:var(--gold)}
+
+/* ---------- capability ---------- */
+.cap-sec{background:var(--ink-2);border-block:1px solid var(--line)}
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:clamp(30px,4vw,44px)}
+.chip{
+  font-family:var(--label);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 18px;min-height:40px;border:1px solid var(--line);color:var(--bone-dim);
+  transition:color .28s,border-color .28s,background .28s;
+}
+.chip:hover{color:var(--bone);border-color:var(--bone-dim)}
+.chip.is-on{background:var(--fuchsia);border-color:var(--fuchsia);color:var(--void);font-weight:500}
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.skill{background:var(--ink-2);padding:19px 20px;display:flex;flex-direction:column;gap:9px;transition:background .3s var(--ease)}
+.skill:hover{background:var(--ink-3)}
+.skill b{font-size:14.5px;font-weight:500;line-height:1.4}
+.skill em{font-family:var(--label);font-style:normal;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--fuchsia)}
+.cap-empty{font-family:var(--label);font-size:12px;color:var(--bone-dim);padding:26px 0}
+
+/* ---------- services ---------- */
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(266px,1fr));gap:clamp(18px,2.4vw,26px)}
+.svc-item{border:1px solid var(--line);padding:30px 26px 34px;position:relative;overflow:hidden;transition:border-color .4s var(--ease),transform .45s var(--ease)}
+.svc-item::before{content:'';position:absolute;inset:0;background:linear-gradient(155deg,rgba(255,46,136,.13),transparent 58%);opacity:0;transition:opacity .45s var(--ease)}
+.svc-item:hover{border-color:var(--fuchsia);transform:translateY(-5px)}
+.svc-item:hover::before{opacity:1}
+.svc-n{font-family:var(--label);font-size:10.5px;letter-spacing:.15em;color:var(--fuchsia);position:relative}
+.svc-item h3{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.2;letter-spacing:-.005em;margin:18px 0 13px;position:relative;text-transform:uppercase}
+.svc-item p{font-size:14.5px;line-height:1.8;color:var(--bone-dim);position:relative}
+
+/* ---------- credentials ---------- */
+.creds .field{grid-template-columns:126px minmax(0,1fr)}
+.creds .fv{font-weight:400;color:var(--bone-dim);font-size:15px}
+.creds .fv b{color:var(--bone);font-weight:600}
+.creds .fv i{font-family:var(--editorial);font-style:italic;color:var(--gold)}
+
+/* ---------- contact (inverted) ---------- */
+.contact{background:var(--bone);color:var(--void);padding-block:var(--stack);position:relative;z-index:2}
+.contact .eyebrow{color:var(--fuchsia-dp)}
+.contact .eyebrow::before{background:var(--fuchsia-dp)}
+.contact-h{font-family:var(--display);font-weight:400;font-size:clamp(40px,10vw,146px);line-height:.9;letter-spacing:-.015em;text-transform:uppercase;margin:clamp(22px,3vw,34px) 0 clamp(32px,4.4vw,50px)}
+.contact-h i{font-family:var(--editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.02em;color:var(--fuchsia-dp)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(28px,5vw,76px);padding-top:clamp(30px,4vw,44px);border-top:1px solid rgba(11,9,16,.16)}
+.contact-note{font-size:15.5px;line-height:1.85;max-width:44ch;color:rgba(11,9,16,.72)}
+.contact .field{border-bottom-color:rgba(11,9,16,.12)}
+.contact .fields{border-top-color:rgba(11,9,16,.16)}
+.contact .fk{color:rgba(11,9,16,.5)}
+.contact .fv a{position:relative;background-image:linear-gradient(var(--fuchsia-dp),var(--fuchsia-dp));background-size:0% 1px;background-repeat:no-repeat;background-position:left bottom;padding-bottom:3px;transition:background-size .4s var(--ease),color .3s}
+.contact .fv a:hover{color:var(--fuchsia-dp);background-size:100% 1px}
+.contact .btn{border-color:rgba(11,9,16,.2)}
+.contact .btn-fill{background:var(--void);color:var(--bone);border-color:var(--void)}
+.contact .btn-fill::before{background:var(--fuchsia-dp)}
+.contact .btn-fill:hover{color:var(--bone);border-color:var(--fuchsia-dp)}
+.contact .btn-line{color:var(--void)}
+.contact .btn-line::before{background:var(--void)}
+.contact .btn-line:hover{color:var(--bone);border-color:var(--void)}
+
+.foot{background:var(--bone);color:rgba(11,9,16,.5);padding:24px var(--gut) 32px;border-top:1px solid rgba(11,9,16,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--label);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;position:relative;z-index:2}
+.to-top{transition:color .3s}
+.to-top:hover{color:var(--fuchsia-dp)}
+
+
+/* ---------- intro curtain ---------- */
+.curtain{
+  position:fixed;inset:0;z-index:300;background:var(--void);
+  display:grid;place-items:center;
+}
+.curtain-in{text-align:center;overflow:hidden}
+.curtain-name{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(30px,6vw,74px);line-height:1;letter-spacing:.01em;
+  text-transform:uppercase;color:var(--bone);
+}
+.curtain-name i{font-style:italic;color:var(--gold)}
+.curtain-bar{height:1px;background:var(--fuchsia);margin-top:22px;transform-origin:left;transform:scaleX(0)}
+
+/* ---------- second marquee: outline text, opposite direction ---------- */
+.marquee-2{background:var(--void);color:var(--bone);border-bottom:1px solid var(--line);padding:15px 0}
+.marquee-2 .mq-track{animation-direction:reverse;animation-duration:64s}
+.marquee-2 .mq-track span{color:transparent;-webkit-text-stroke:1px var(--bone-dim);font-style:italic;letter-spacing:.03em}
+.marquee-2 .mq-track span::after{background:var(--fuchsia)}
+
+/* ---------- process: sticky stacking cards ---------- */
+.steps{display:grid;gap:20px}
+.step{
+  position:sticky;top:calc(92px + var(--i) * 18px);
+  background:var(--ink-2);border:1px solid var(--line);
+  padding:clamp(26px,4vw,50px);min-height:clamp(250px,40vh,380px);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,60px);align-items:start;
+  box-shadow:0 -24px 70px rgba(11,9,16,.55);
+}
+.step-n{font-family:var(--display);font-style:italic;font-size:clamp(44px,6.5vw,96px);line-height:.85;color:var(--fuchsia);transition:color .25s linear}
+.step h3{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,46px);line-height:1.06;letter-spacing:-.01em;margin-bottom:14px}
+.step p{font-size:16px;line-height:1.8;color:var(--bone-dim);max-width:58ch}
+
+/* ---------- section titles reveal from a mask ---------- */
+.sec-title{clip-path:inset(-20% -5% -30% -5%)}
+
+/* ---------- nav: current section ---------- */
+.nav-list a.is-active{color:var(--bone)}
+.nav-list a.is-active::after{transform:scaleX(1);transform-origin:left}
+
+/* ---------- contact: copy button ---------- */
+.fv-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
+.copy-btn{
+  font-family:var(--label);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid rgba(11,9,16,.22);color:rgba(11,9,16,.62);padding:6px 11px;min-height:30px;
+  transition:color .25s,border-color .25s,background .25s;
+}
+.copy-btn:hover{border-color:var(--fuchsia-dp);color:var(--fuchsia-dp)}
+.copy-btn.done{background:var(--fuchsia-dp);border-color:var(--fuchsia-dp);color:var(--bone)}
+
+/* ---------- the dial ---------- */
+.dial{margin-top:clamp(30px,4vw,44px)}
+.dial-stage{min-height:clamp(96px,15vw,190px);display:flex;align-items:center}
+.dial-line{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(26px,5.4vw,72px);line-height:1.06;letter-spacing:-.012em;
+  max-width:16ch;transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+.dial-line i{font-style:italic;color:var(--fuchsia);transition:color .25s linear}
+.dial-track{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:clamp(14px,2.4vw,28px);align-items:center;
+  padding:clamp(22px,3vw,32px) 0;border-block:1px solid var(--line);
+  margin-top:clamp(20px,3vw,30px);
+}
+.dial-lab{
+  font-family:var(--label);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bone-dim);transition:color .25s linear;white-space:nowrap;
+}
+.dial-lab.on{color:var(--fuchsia)}
+#dial{
+  -webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:grab;
+}
+#dial:active{cursor:grabbing}
+#dial::-webkit-slider-runnable-track{height:1px;background:var(--line)}
+#dial::-moz-range-track{height:1px;background:var(--line)}
+#dial::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--fuchsia);margin-top:-10.5px;border:0;
+  box-shadow:0 0 0 6px rgba(255,46,136,.16);transition:box-shadow .25s,background .25s linear;
+}
+#dial:hover::-webkit-slider-thumb,#dial:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 11px rgba(255,46,136,.2)}
+@keyframes thumbpulse{0%,100%{box-shadow:0 0 0 6px rgba(255,46,136,.16)}50%{box-shadow:0 0 0 14px rgba(255,46,136,.05)}}
+.dial.ready #dial::-webkit-slider-thumb{animation:thumbpulse 2.4s ease-in-out infinite}
+#dial::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--fuchsia);border:0;
+  box-shadow:0 0 0 6px rgba(255,46,136,.16);
+}
+.dial-proof{display:grid;gap:12px;padding-top:clamp(22px,3vw,30px)}
+.dial-proof li{
+  position:relative;padding-left:26px;font-size:15.5px;line-height:1.7;color:var(--bone-dim);
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+.dial-proof li::before{
+  content:'';position:absolute;left:0;top:.72em;width:14px;height:1px;
+  background:var(--fuchsia);transition:background .25s linear;
+}
+.dial-proof strong{color:var(--bone);font-weight:600}
+
+/* ---------- responsive ---------- */
+@media(max-width:920px){
+  .step{grid-template-columns:1fr;gap:14px;min-height:0;top:calc(76px + var(--i) * 12px)}
+  .step-n{font-size:40px}
+  .dial-track{grid-template-columns:1fr;gap:6px}
+  .dial-lab{font-size:10px}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-portrait{max-width:264px}
+  .role-head{grid-template-columns:64px minmax(0,1fr) auto;gap:16px}
+  .role-inner{grid-template-columns:1fr;gap:22px}
+  .role-meta{display:flex;flex-wrap:wrap;gap:0 26px;border-top:none;border-bottom:1px solid var(--line-2);padding-bottom:12px}
+  .role-meta .field{border-bottom:none;padding:4px 0}
+  .role:hover .role-org{transform:none}
+  .nav-toggle{display:block;z-index:110}
+  .nav-list{
+    position:fixed;inset:0;background:var(--void);flex-direction:column;
+    justify-content:center;align-items:flex-start;gap:6px;padding:0 var(--gut);z-index:105;
+    clip-path:inset(0 0 100% 0);transition:clip-path .55s var(--ease);
+  }
+  .nav-list.is-open{clip-path:inset(0 0 0 0)}
+  .nav-list a{font-family:var(--display);font-weight:400;font-size:clamp(28px,7vw,44px);letter-spacing:-.005em;text-transform:uppercase;color:var(--bone);padding:11px 0}
+  .nav-list a::after{display:none}
+  .nav-list a:hover{color:var(--fuchsia)}
+  .nav.is-open .nav-toggle span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .nav.is-open .nav-toggle span:nth-child(2){opacity:0}
+  .nav.is-open .nav-toggle span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+}
+@media(max-width:600px){
+  .field{grid-template-columns:1fr;gap:4px;padding:11px 0}
+  .creds .field{grid-template-columns:1fr}
+  .role-head{grid-template-columns:minmax(0,1fr) auto;gap:14px}
+  .role-yr{grid-column:1;font-size:11px;margin-bottom:-4px}
+  .role-head>div:nth-child(2){grid-column:1}
+  .role-ic{grid-column:2;grid-row:1/3}
+  .btn{flex:1 1 auto;justify-content:center}
+  .stat{padding:24px 18px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  .curtain{display:none!important}
+  .dial.ready #dial::-webkit-slider-thumb{animation:none}
+  .step{position:static}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .mq-track{animation:none}
+  .grain{display:none}
+}
+@media print{
+  .nav,.cta-row,.hero-portrait,.grain,.progress,.marquee,.hero-glow,.role-ic,
+  .curtain,.dial-track{display:none}
+  body,.contact,.foot,.cap-sec{background:#fff;color:#000}
+  .role-panel{height:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="prog" aria-hidden="true"></div>
+
+<nav class="nav" id="nav">
+  <a class="nav-mark" href="#top">AISHANI SHARMA<span>.</span></a>
+  <ul class="nav-list" id="navlist">
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#capability">Capability</a></li>
+    <li><a href="#services">Freelance</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navtoggle" aria-label="Open menu" aria-expanded="false" aria-controls="navlist">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-glow" id="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow hero-eyebrow">Brand &amp; marketing communications</span>
+    <h1 class="hero-name" aria-label="Aishani Sharma">
+      <span class="ln" data-split>Aishani</span>
+      <span class="ln l2" data-split>Sharma</span>
+    </h1>
+    <div class="hero-rule" id="hrule"></div>
+
+    <div class="hero-grid">
+      <figure class="hero-portrait">
+        <img src="assets/aishani.jpg" alt="Aishani Sharma" width="900" height="1200" id="portrait">
+      </figure>
+
+      <div>
+        <p class="hero-lede">I build the brand. <i>And the platform it runs on.</i></p>
+
+        <dl class="fields">
+          <div class="field"><dt class="fk">Focus</dt><dd class="fv">Brand positioning, campaign strategy, content direction</dd></div>
+          <div class="field"><dt class="fk">Background</dt><dd class="fv">2 yrs 8 mos Accenture · fashion label · OOH · independent practice</dd></div>
+          <div class="field"><dt class="fk">Languages</dt><dd class="fv">English · Hindi · French</dd></div>
+          <div class="field"><dt class="fk">Also ships</dt><dd class="fv">Websites and custom CMS on Supabase / Postgres</dd></div>
+          <div class="field"><dt class="fk">Status</dt><dd class="fv"><span class="live"><i class="dot"></i>Open to roles</span> in Delhi NCR and Mumbai, with Dubai on the horizon</dd></div>
+        </dl>
+
+        <div class="cta-row">
+          <a class="btn btn-fill magnetic" href="#work">See the work
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+          </a>
+          <a class="btn btn-line magnetic" href="assets/Aishani-Sharma-Resume.pdf" download>Résumé
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v10M3.5 7.5 8 12l4.5-4.5M2.5 14h11"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mq">
+    <span>Brand strategy</span><span>Luxury marketing</span><span>Campaign concepts</span><span>Consumer psychology</span><span>D2C brands</span><span>Reels &amp; short-form</span><span>Creator economy</span><span>Data-led marketing</span>
+    <span>Brand strategy</span><span>Luxury marketing</span><span>Campaign concepts</span><span>Consumer psychology</span><span>D2C brands</span><span>Reels &amp; short-form</span><span>Creator economy</span><span>Data-led marketing</span>
+  </div>
+</div>
+<div class="marquee marquee-2" aria-hidden="true">
+  <div class="mq-track" id="mq2">
+    <span>Gurugram</span><span>Delhi NCR</span><span>Mumbai</span><span>Dubai</span><span>English</span><span>Hindi</span><span>Français</span><span>Open to roles</span>
+    <span>Gurugram</span><span>Delhi NCR</span><span>Mumbai</span><span>Dubai</span><span>English</span><span>Hindi</span><span>Français</span><span>Open to roles</span>
+  </div>
+</div>
+
+<!-- ============ THE DIAL ============ -->
+<section class="sec wrap" id="approach">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">The short version</span>
+      <h2 class="sec-title">Two halves, <i>one brief</i></h2>
+    </div>
+      </div>
+
+  <div class="dial">
+    <div class="dial-stage">
+      <p class="dial-line" id="dialLine">I do both, <i>in the same brief.</i></p>
+    </div>
+
+    <div class="dial-track">
+      <span class="dial-lab" id="labA">Analyst</span>
+      <input type="range" id="dial" min="0" max="100" step="1" value="50"
+             aria-label="Balance between analytical and creative work">
+      <span class="dial-lab" id="labB">Creative</span>
+    </div>
+
+    <ul class="dial-proof" id="dialProof">
+      <li><strong>2 yrs 8 mos at Accenture:</strong> dashboards, stakeholder reporting, SLA delivery</li>
+      <li><strong>Campaign concepts for couture drops:</strong> collection stories turned into launches</li>
+      <li><strong>A Postgres content model and a live CMS:</strong> strategy through to production</li>
+    </ul>
+  </div>
+
+  <div class="thesis-body">
+    <p data-rv>Two years and eight months at Accenture built the rigour: reading patterns in high-volume data, owning stakeholder reporting, delivering under strict SLAs. That is where I learned to <strong>separate signal from noise under time pressure</strong>, the same discipline that now drives how I read a campaign and an audience.</p>
+    <p data-rv>Times OOH and Label Simran Anand applied it to live briefs, content strategy and market research. For AKS Architecture Studio I designed and shipped the website, the Postgres content model and a custom CMS, then took ownership of the studio's social channels: <strong>strategy through to the thing that actually runs in production</strong>.</p>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="wrap" style="padding-bottom:var(--stack)">
+  <dl class="stats" data-rv-group>
+    <div class="stat"><dt><span class="count" data-to="2">0</span><sub>yr</sub> <span class="count" data-to="8">0</span><sub>mo</sub></dt><dd>Accenture, enterprise data &amp; reporting</dd></div>
+    <div class="stat"><dt><span class="count" data-to="4">0</span></dt><dd>Organisations across marketing &amp; analytics</dd></div>
+    <div class="stat"><dt><span class="count" data-to="1">0</span></dt><dd>Website, CMS &amp; database shipped end to end</dd></div>
+    <div class="stat"><dt><span class="count" data-to="3">0</span></dt><dd>Languages: English, Hindi, French</dd></div>
+    <div class="stat"><dt><span class="count" data-to="1">0</span></dt><dd>Granted patent, co-inventor</dd></div>
+  </dl>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="sec-tight wrap" id="work">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Experience</span>
+      <h2 class="sec-title">Where I&#8217;ve <i>worked</i></h2>
+    </div>
+    <p class="sec-note">Four roles, most recent first. Select one to open it.</p>
+  </div>
+
+  <div class="roles" id="roles">
+
+    <article class="role is-open">
+      <button class="role-head" aria-expanded="true">
+        <span class="role-yr">2026</span>
+        <div>
+          <span class="role-org">AKS Architecture Studio</span>
+          <span class="role-title">Marketing &amp; Digital Consultant · Independent</span>
+        </div>
+        <span class="role-ic" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l5 5 5-5"/></svg></span>
+      </button>
+      <div class="role-panel">
+        <div class="role-inner">
+          <dl class="role-meta">
+            <div class="field"><dt class="fk">Period</dt><dd class="fv">Jul 2026 to present</dd></div>
+            <div class="field"><dt class="fk">Sector</dt><dd class="fv">Architecture &amp; interiors</dd></div>
+            <div class="field"><dt class="fk">Place</dt><dd class="fv">Panchkula &amp; Mohali</dd></div>
+            <div class="field"><dt class="fk">Site</dt><dd class="fv"><a class="ext" href="https://www.aksarchitects.co" target="_blank" rel="noopener">aksarchitects.co</a></dd></div>
+          </dl>
+          <div>
+            <ul class="role-points">
+              <li>Designed and shipped <strong><a class="ext" href="https://www.aksarchitects.co" target="_blank" rel="noopener">aksarchitects.co</a></strong> end to end: information architecture, page copy, project presentation and a responsive mobile-first build. It gave AKS its first owned digital presence independent of social platforms.</li>
+              <li>Built a password-authenticated admin CMS on <strong>Supabase and Postgres</strong>, designing the relational content model across projects, project images and upcoming renders, with direct image upload to object storage.</li>
+              <li>Handed the studio&#8217;s two principals full control to publish, reorder and feature work themselves, <strong>removing the developer dependency</strong> for every content change.</li>
+              <li>Own social media end to end: content strategy, monthly calendars, copy and creative direction, built around a Reels-first approach to short-form video.</li>
+              <li>Track site and channel performance, translating what the numbers show into <strong>next month&#8217;s content plan</strong> rather than reporting it after the fact.</li>
+            </ul>
+            <div class="tags"><span class="tag">Website architecture</span><span class="tag">Supabase</span><span class="tag">Postgres</span><span class="tag">Custom CMS</span><span class="tag">Content strategy</span><span class="tag">Reels</span><span class="tag">Analytics</span></div>
+            <a class="role-visit" href="https://www.aksarchitects.co" target="_blank" rel="noopener">Visit the site
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="role">
+      <button class="role-head" aria-expanded="false">
+        <span class="role-yr">2025–26</span>
+        <div>
+          <span class="role-org">Label Simran Anand</span>
+          <span class="role-title">Marketing &amp; Brand Communications · Part-time</span>
+        </div>
+        <span class="role-ic" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l5 5 5-5"/></svg></span>
+      </button>
+      <div class="role-panel">
+        <div class="role-inner">
+          <dl class="role-meta">
+            <div class="field"><dt class="fk">Period</dt><dd class="fv">Oct 2025 to Mar 2026</dd></div>
+            <div class="field"><dt class="fk">Sector</dt><dd class="fv">Homegrown fashion label</dd></div>
+            <div class="field"><dt class="fk">Audience</dt><dd class="fv">Couture &amp; occasion wear</dd></div>
+          </dl>
+          <div>
+            <ul class="role-points">
+              <li>Worked directly with the label on campaign planning and brand communications, <strong>translating collection stories into campaign concepts</strong> for a couture and occasion-wear audience.</li>
+              <li>Built social media strategy and content direction across seasonal calendars, short-form video and launch moments tied to each collection drop.</li>
+              <li>Sharpened how the label positioned itself to a <strong>D2C audience</strong>.</li>
+            </ul>
+            <div class="tags"><span class="tag">Campaign planning</span><span class="tag">Brand comms</span><span class="tag">Content calendars</span><span class="tag">Collection launches</span><span class="tag">D2C positioning</span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="role">
+      <button class="role-head" aria-expanded="false">
+        <span class="role-yr">2023–26</span>
+        <div>
+          <span class="role-org">Accenture</span>
+          <span class="role-title">Advanced Application Engineer Analyst · SOC</span>
+        </div>
+        <span class="role-ic" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l5 5 5-5"/></svg></span>
+      </button>
+      <div class="role-panel">
+        <div class="role-inner">
+          <dl class="role-meta">
+            <div class="field"><dt class="fk">Period</dt><dd class="fv">Nov 2023 to Jun 2026</dd></div>
+            <div class="field"><dt class="fk">Tenure</dt><dd class="fv">2 yrs 8 mos</dd></div>
+            <div class="field"><dt class="fk">Place</dt><dd class="fv">Gurugram, hybrid</dd></div>
+          </dl>
+          <div>
+            <ul class="role-points">
+              <li>Read patterns in large, high-volume datasets to <strong>separate signal from noise under time pressure</strong>, the analytical discipline that now drives how I read campaigns and audiences.</li>
+              <li>Built and maintained dashboards and recurring reporting that turned complex performance data into <strong>clear, decision-ready summaries</strong> for senior and client-side stakeholders.</li>
+              <li>Monitored, investigated and resolved incidents across enterprise client environments to strict SLAs in a 24/7 operations model, owning escalation and <strong>briefing non-technical stakeholders</strong> on complex findings.</li>
+            </ul>
+            <div class="tags"><span class="tag">Data analysis</span><span class="tag">Dashboards</span><span class="tag">Stakeholder reporting</span><span class="tag">SLA delivery</span><span class="tag">Escalation ownership</span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="role">
+      <button class="role-head" aria-expanded="false">
+        <span class="role-yr">2023</span>
+        <div>
+          <span class="role-org">Times OOH</span>
+          <span class="role-title">Marketing Team Intern · 5 months</span>
+        </div>
+        <span class="role-ic" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6l5 5 5-5"/></svg></span>
+      </button>
+      <div class="role-panel">
+        <div class="role-inner">
+          <dl class="role-meta">
+            <div class="field"><dt class="fk">Period</dt><dd class="fv">Feb to Jun 2023</dd></div>
+            <div class="field"><dt class="fk">Sector</dt><dd class="fv">Out-of-home advertising</dd></div>
+          </dl>
+          <div>
+            <ul class="role-points">
+              <li>Pitched outdoor poster and OOH campaign concepts into <strong>live client briefs</strong>, contributing creative ideas alongside the core marketing team.</li>
+              <li>Conducted market research and tracked emerging trends across new and developing markets, turning that intelligence into campaign strategy input.</li>
+              <li>Supported campaign execution, built client-facing pitch presentations and analysed post-campaign performance.</li>
+            </ul>
+            <div class="tags"><span class="tag">Campaign concepts</span><span class="tag">Market research</span><span class="tag">Pitch decks</span><span class="tag">Post-campaign analysis</span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="sec-tight wrap" id="process">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Process</span>
+      <h2 class="sec-title">How I <i>work</i></h2>
+    </div>
+    <p class="sec-note">Four moves, in this order, on every brief.</p>
+  </div>
+  <div class="steps">
+    <article class="step" style="--i:0">
+      <span class="step-n">01</span>
+      <div>
+        <h3>Start with the person</h3>
+        <p>Every campaign begins with one question: what does this person want to feel? Not what they want to buy. What they want to become. The brief is written from their side of the screen.</p>
+      </div>
+    </article>
+    <article class="step" style="--i:1">
+      <span class="step-n">02</span>
+      <div>
+        <h3>Find the tension</h3>
+        <p>The most memorable brands live in a productive tension: heritage against modernity, accessible against aspirational. I find that tension and make it the story.</p>
+      </div>
+    </article>
+    <article class="step" style="--i:2">
+      <span class="step-n">03</span>
+      <div>
+        <h3>Make it measurable</h3>
+        <p>Beautiful ideas that cannot be tracked are half-finished. I define what success looks like before a campaign launches, not after. Data is not the enemy of creativity.</p>
+      </div>
+    </article>
+    <article class="step" style="--i:3">
+      <span class="step-n">04</span>
+      <div>
+        <h3>Edit ruthlessly</h3>
+        <p>Luxury is restraint. The best campaigns know what to leave out. Fewer things, more intention. Every element earns its place or it goes.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ CAPABILITY ============ -->
+<section class="sec-tight cap-sec" id="capability">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Capability</span>
+        <h2 class="sec-title">What I <i>actually do</i></h2>
+      </div>
+      <p class="sec-note">Filter by the kind of problem it solves.</p>
+    </div>
+
+    <div class="filters" id="filters" role="group" aria-label="Filter capabilities">
+      <button class="chip is-on" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="strategy" aria-pressed="false">Strategy</button>
+      <button class="chip" data-f="creative" aria-pressed="false">Creative</button>
+      <button class="chip" data-f="digital" aria-pressed="false">Digital &amp; social</button>
+      <button class="chip" data-f="analytics" aria-pressed="false">Analytics</button>
+      <button class="chip" data-f="web" aria-pressed="false">Web &amp; CMS</button>
+      <button class="chip" data-f="tools" aria-pressed="false">Tools</button>
+    </div>
+
+    <div class="skills" id="skills" aria-live="polite">
+      <div class="skill" data-c="strategy"><em>Strategy</em><b>Brand positioning</b></div>
+      <div class="skill" data-c="strategy"><em>Strategy</em><b>Campaign strategy</b></div>
+      <div class="skill" data-c="strategy"><em>Strategy</em><b>Market entry</b></div>
+      <div class="skill" data-c="strategy"><em>Strategy</em><b>Competitor analysis</b></div>
+      <div class="skill" data-c="strategy"><em>Strategy</em><b>Audience segmentation</b></div>
+      <div class="skill" data-c="creative"><em>Creative</em><b>Brand storytelling</b></div>
+      <div class="skill" data-c="creative"><em>Creative</em><b>Content direction</b></div>
+      <div class="skill" data-c="creative"><em>Creative</em><b>Copywriting</b></div>
+      <div class="skill" data-c="creative"><em>Creative</em><b>Moodboarding</b></div>
+      <div class="skill" data-c="digital"><em>Digital</em><b>Instagram Reels strategy</b></div>
+      <div class="skill" data-c="digital"><em>Digital</em><b>Creator &amp; influencer marketing</b></div>
+      <div class="skill" data-c="digital"><em>Digital</em><b>Content calendars</b></div>
+      <div class="skill" data-c="digital"><em>Digital</em><b>Trend forecasting</b></div>
+      <div class="skill" data-c="digital"><em>Digital</em><b>Social media strategy</b></div>
+      <div class="skill" data-c="analytics"><em>Analytics</em><b>Campaign performance reporting</b></div>
+      <div class="skill" data-c="analytics"><em>Analytics</em><b>Consumer behaviour analysis</b></div>
+      <div class="skill" data-c="analytics"><em>Analytics</em><b>Customer segmentation</b></div>
+      <div class="skill" data-c="analytics"><em>Analytics</em><b>CRM</b></div>
+      <div class="skill" data-c="web"><em>Web &amp; CMS</em><b>Supabase / Postgres</b></div>
+      <div class="skill" data-c="web"><em>Web &amp; CMS</em><b>Relational content modelling</b></div>
+      <div class="skill" data-c="web"><em>Web &amp; CMS</em><b>Auth &amp; object storage</b></div>
+      <div class="skill" data-c="web"><em>Web &amp; CMS</em><b>Website architecture</b></div>
+      <div class="skill" data-c="web"><em>Web &amp; CMS</em><b>Responsive, mobile-first build</b></div>
+      <div class="skill" data-c="tools"><em>Tools</em><b>GA4 &amp; Google Ads</b></div>
+      <div class="skill" data-c="tools"><em>Tools</em><b>Meta Ads Manager</b></div>
+      <div class="skill" data-c="tools"><em>Tools</em><b>HubSpot &amp; Salesforce CRM</b></div>
+      <div class="skill" data-c="tools"><em>Tools</em><b>Power BI &amp; Advanced Excel</b></div>
+      <div class="skill" data-c="tools"><em>Tools</em><b>Canva · Figma · Notion</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="sec-tight wrap" id="services">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Freelance</span>
+      <h2 class="sec-title">Work <i>with me</i></h2>
+    </div>
+    <p class="sec-note">A small number of independent engagements alongside full-time work.</p>
+  </div>
+  <div class="svc" data-rv-group>
+    <div class="svc-item">
+      <span class="svc-n">01</span>
+      <h3>Brand &amp; campaign strategy</h3>
+      <p>Positioning, competitor and audience work, and campaign concepts you can actually run. Delivered as a document your team can act on, not a mood piece.</p>
+    </div>
+    <div class="svc-item">
+      <span class="svc-n">02</span>
+      <h3>Social &amp; content direction</h3>
+      <p>Monthly content calendars, copy and creative direction, built Reels-first. Performance reviewed each month and fed straight into the next plan.</p>
+    </div>
+    <div class="svc-item">
+      <span class="svc-n">03</span>
+      <h3>Website &amp; CMS build</h3>
+      <p>A site you own, with a custom admin so your team can publish without calling a developer. Built exactly this for AKS Architecture Studio on Supabase and Postgres.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREDENTIALS ============ -->
+<section class="sec-tight wrap" id="credentials">
+  <div class="sec-head">
+    <div>
+      <span class="eyebrow">Credentials</span>
+      <h2 class="sec-title">Education &amp; <i>certification</i></h2>
+    </div>
+  </div>
+  <dl class="fields creds" data-rv-group>
+    <div class="field"><dt class="fk">Degree</dt><dd class="fv"><b>B.Tech, Electronics and Instrumentation</b>, Thapar Institute of Engineering &amp; Technology, 2019 to 2023</dd></div>
+    <div class="field"><dt class="fk">Patent</dt><dd class="fv"><b>Granted, co-inventor:</b> <i>A System of Non-Invasive Diagnosis for Diabetes and Dyspepsia Detection using ECG Signal</i></dd></div>
+    <div class="field"><dt class="fk">Certificate</dt><dd class="fv"><b>Google Digital Marketing &amp; E-commerce</b>, in progress. Foundations, Attract and Engage Customers, and From Likes to Leads completed Jul to Aug 2026</dd></div>
+    <div class="field"><dt class="fk">Certificate</dt><dd class="fv"><b>Marketing in a Digital World</b>, University of Illinois Urbana-Champaign, Jun 2026</dd></div>
+  </dl>
+</section>
+
+</main>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Get in touch</span>
+    <h2 class="contact-h">Let&#8217;s <i>talk</i>.</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-note">Open to brand strategy and marketing communications roles across Delhi NCR and Mumbai, with Dubai on the horizon, and to a small number of freelance engagements. The fastest way to reach me is email.</p>
+        <div class="cta-row">
+          <a class="btn btn-fill magnetic" href="mailto:aishanis.work@gmail.com?subject=Hello%20Aishani">Email me
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+          </a>
+          <a class="btn btn-line magnetic" href="assets/Aishani-Sharma-Resume.pdf" download>Résumé
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v10M3.5 7.5 8 12l4.5-4.5M2.5 14h11"/></svg>
+          </a>
+        </div>
+      </div>
+      <dl class="fields">
+        <div class="field"><dt class="fk">Email</dt><dd class="fv fv-row"><a href="mailto:aishanis.work@gmail.com">aishanis.work@gmail.com</a><button class="copy-btn" type="button" data-copy="aishanis.work@gmail.com">Copy</button></dd></div>
+        <div class="field"><dt class="fk">Alt email</dt><dd class="fv"><a href="mailto:aishani631@gmail.com">aishani631@gmail.com</a></dd></div>
+        <div class="field"><dt class="fk">Phone</dt><dd class="fv"><a href="tel:+919988383371">+91 99883 83371</a></dd></div>
+        <div class="field"><dt class="fk">LinkedIn</dt><dd class="fv"><a href="https://www.linkedin.com/in/aishanisharma6" target="_blank" rel="noopener">/in/aishanisharma6</a></dd></div>
+        <div class="field"><dt class="fk">Based</dt><dd class="fv">Gurugram, Delhi NCR, India</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>&copy; <span id="yr">2026</span> Aishani Sharma</span>
+  <span id="localtime">Gurugram</span>
+  <a class="to-top" href="#top">Back to top ↑</a>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"Person",
+  "name":"Aishani Sharma",
+  "jobTitle":"Brand & Marketing Communications Professional",
+  "email":"mailto:aishanis.work@gmail.com","telephone":"+91-99883-83371",
+  "image":"assets/aishani.jpg",
+  "address":{"@type":"PostalAddress","addressLocality":"Gurugram","addressRegion":"Haryana","addressCountry":"IN"},
+  "knowsLanguage":["English","Hindi","French"],
+  "sameAs":["https://www.linkedin.com/in/aishanisharma6"],
+  "alumniOf":{"@type":"CollegeOrUniversity","name":"Thapar Institute of Engineering & Technology"},
+  "knowsAbout":["Brand strategy","Luxury marketing","Campaign strategy","Content direction","Social media strategy","Marketing analytics"]
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script defer src="app.js"></script>
+</body>
+</html>
