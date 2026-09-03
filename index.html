@@ -144,7 +144,7 @@ main,.contact,.foot{overflow-x:clip}
 .hero-eyebrow{margin-bottom:clamp(24px,3.4vw,38px)}
 .hero-name{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(40px,16vw,208px);line-height:.9;letter-spacing:-.018em;
+  font-size:clamp(40px,12.4vw,162px);line-height:.9;letter-spacing:-.018em;
   text-transform:uppercase;
 }
 .hero-name .ln{display:block;overflow:hidden;padding-bottom:.06em;white-space:nowrap}
@@ -152,9 +152,11 @@ main,.contact,.foot{overflow-x:clip}
 .hero-name .l2{font-style:italic;font-weight:400;color:var(--gold);letter-spacing:.005em}
 .hero-rule{height:2px;background:linear-gradient(90deg,var(--fuchsia),var(--gold) 60%,transparent);margin:clamp(26px,3.6vw,44px) 0 clamp(32px,4.6vw,54px);transform-origin:left}
 
-.hero-grid{display:grid;grid-template-columns:minmax(0,296px) minmax(0,1fr);gap:clamp(28px,5vw,76px);align-items:start}
-.hero-portrait{position:relative;overflow:hidden;border:1px solid var(--line)}
-.hero-portrait img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.9);transition:filter .7s var(--ease);will-change:transform}
+.hero-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,34%);gap:clamp(28px,5vw,72px);align-items:stretch}
+.hero-copy{min-width:0}
+.hero-fields{margin-top:clamp(36px,5vw,64px)}
+.hero-portrait{position:relative;overflow:hidden;border:1px solid var(--line);width:100%;height:100%;min-height:380px;margin:0}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:grayscale(1) contrast(1.12) brightness(.9);transition:filter .7s var(--ease);will-change:transform}
 .hero-portrait::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(160deg,rgba(255,46,136,.34),transparent 46%,rgba(196,176,245,.24));
@@ -167,7 +169,7 @@ main,.contact,.foot{overflow-x:clip}
 .hero-lede{
   font-family:var(--display);font-weight:400;
   font-size:clamp(23px,3vw,40px);line-height:1.2;letter-spacing:-.005em;
-  max-width:17ch;margin-bottom:clamp(30px,4vw,44px);
+  max-width:17ch;margin-bottom:clamp(26px,3.4vw,38px);
 }
 .hero-lede i{font-family:var(--editorial);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--gold)}
 
@@ -230,7 +232,7 @@ main,.contact,.foot{overflow-x:clip}
 [data-tilt]:hover .glare{opacity:1}
 
 /* ---------- hero stamp: slowly turning, tilts with the pointer ---------- */
-.hero-fig{position:relative}
+.hero-fig{position:relative;display:flex}
 .stamp{position:absolute;right:-38px;bottom:-38px;width:156px;height:156px;pointer-events:none;z-index:3;transform-style:preserve-3d}
 .stamp::before{content:'';position:absolute;inset:30px;border-radius:50%;background:var(--void);border:1px solid var(--line);box-shadow:0 22px 50px rgba(0,0,0,.5)}
 .stamp svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:spin 28s linear infinite}
@@ -491,8 +493,12 @@ main,.contact,.foot{overflow-x:clip}
   .step-n{font-size:40px}
   .dial-track{grid-template-columns:1fr;gap:6px}
   .dial-lab{font-size:10px}
-  .hero-grid{grid-template-columns:1fr}
-  .hero-portrait{max-width:264px}
+  .hero-top{grid-template-columns:1fr;gap:34px}
+  .hero-name{font-size:clamp(40px,16vw,208px)}
+  .hero-fig{max-width:264px}
+  .hero-portrait{height:auto;min-height:0}
+  .hero-portrait img{height:auto;aspect-ratio:3/4}
+  .hero-fields{margin-top:34px}
   .role-head{grid-template-columns:64px minmax(0,1fr) auto;gap:16px}
   .role-inner{grid-template-columns:1fr;gap:22px}
   .role-meta{display:flex;flex-wrap:wrap;gap:0 26px;border-top:none;border-bottom:1px solid var(--line-2);padding-bottom:12px}
@@ -570,13 +576,24 @@ main,.contact,.foot{overflow-x:clip}
   <div class="hero-glow" id="glow" aria-hidden="true"></div>
   <div class="wrap">
     <span class="eyebrow hero-eyebrow">Brand &amp; marketing communications</span>
-    <h1 class="hero-name" aria-label="Aishani Sharma">
-      <span class="ln" data-split>Aishani</span>
-      <span class="ln l2" data-split>Sharma</span>
-    </h1>
-    <div class="hero-rule" id="hrule"></div>
+    <div class="hero-top">
+      <div class="hero-copy">
+        <h1 class="hero-name" aria-label="Aishani Sharma">
+          <span class="ln" data-split>Aishani</span>
+          <span class="ln l2" data-split>Sharma</span>
+        </h1>
+        <div class="hero-rule" id="hrule"></div>
+        <p class="hero-lede">I build the brand. <i>And the platform it runs on.</i></p>
+        <div class="cta-row">
+          <a class="btn btn-fill magnetic" href="#work">See the work
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+          </a>
+          <a class="btn btn-line magnetic" href="assets/Aishani-Sharma-Resume.pdf" download>Résumé
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v10M3.5 7.5 8 12l4.5-4.5M2.5 14h11"/></svg>
+          </a>
+        </div>
+      </div>
 
-    <div class="hero-grid">
       <div class="hero-fig">
         <figure class="hero-portrait" data-tilt="6">
           <img src="assets/aishani.jpg" alt="Aishani Sharma" width="900" height="1200" id="portrait">
@@ -590,28 +607,15 @@ main,.contact,.foot{overflow-x:clip}
           <span class="stamp-core">AS</span>
         </div>
       </div>
-
-      <div>
-        <p class="hero-lede">I build the brand. <i>And the platform it runs on.</i></p>
-
-        <dl class="fields">
-          <div class="field"><dt class="fk">Focus</dt><dd class="fv">Brand positioning, campaign strategy, content direction</dd></div>
-          <div class="field"><dt class="fk">Background</dt><dd class="fv">2 yrs 8 mos Accenture · fashion label · OOH · independent practice</dd></div>
-          <div class="field"><dt class="fk">Languages</dt><dd class="fv">English · Hindi · French</dd></div>
-          <div class="field"><dt class="fk">Also ships</dt><dd class="fv">Websites and custom CMS on Supabase / Postgres</dd></div>
-          <div class="field"><dt class="fk">Status</dt><dd class="fv"><span class="live"><i class="dot"></i>Open to roles</span> in Delhi NCR and Mumbai, with Dubai on the horizon</dd></div>
-        </dl>
-
-        <div class="cta-row">
-          <a class="btn btn-fill magnetic" href="#work">See the work
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
-          </a>
-          <a class="btn btn-line magnetic" href="assets/Aishani-Sharma-Resume.pdf" download>Résumé
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v10M3.5 7.5 8 12l4.5-4.5M2.5 14h11"/></svg>
-          </a>
-        </div>
-      </div>
     </div>
+
+    <dl class="fields hero-fields">
+      <div class="field"><dt class="fk">Focus</dt><dd class="fv">Brand positioning, campaign strategy, content direction</dd></div>
+      <div class="field"><dt class="fk">Background</dt><dd class="fv">2 yrs 8 mos Accenture · fashion label · OOH · independent practice</dd></div>
+      <div class="field"><dt class="fk">Languages</dt><dd class="fv">English · Hindi · French</dd></div>
+      <div class="field"><dt class="fk">Also ships</dt><dd class="fv">Websites and custom CMS on Supabase / Postgres</dd></div>
+      <div class="field"><dt class="fk">Status</dt><dd class="fv"><span class="live"><i class="dot"></i>Open to roles</span> in Delhi NCR and Mumbai, with Dubai on the horizon</dd></div>
+    </dl>
   </div>
 </header>
 
