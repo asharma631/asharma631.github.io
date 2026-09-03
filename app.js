@@ -439,51 +439,69 @@
     scrollTrigger: { trigger: '.hero-portrait', start: 'top bottom', end: 'bottom top', scrub: true }
   });
 
-  /* section titles wipe up out of a mask; their eyebrow and note fade */
+  /* ---------------- 3D scroll ----------------
+     Content travels through depth tied to the scrollbar: it tilts up out of the
+     distance and settles flat as it arrives, and reverses when you scroll back.
+     Each element carries its own perspective, so nothing above it is transformed:
+     the pinned dial and the sticky process cards are deliberately left out. */
+  var deep = isDesktop();
+  var arrive = function (targets, extra) {
+    $$(targets).forEach(function (el) {
+      el.classList.add('d3');
+      gsap.fromTo(el,
+        { rotationX: deep ? -18 : -11, z: deep ? -160 : -80, y: 28, opacity: 0, transformPerspective: 1100, transformOrigin: '50% 100%' },
+        { rotationX: 0, z: 0, y: 0, opacity: 1, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top 100%', end: (extra && extra.end) || 'top 50%', scrub: 0.6 } });
+    });
+  };
+
+  // section headings arrive first and fast; the title still wipes up out of its mask
+  arrive('.sec-head', { end: 'top 62%' });
   $$('.sec-title').forEach(function (el) {
     gsap.from(el, {
-      clipPath: 'inset(-20% -5% 100% -5%)', y: 28, duration: 0.95, ease: 'power3.out',
+      clipPath: 'inset(-20% -5% 100% -5%)', duration: 0.95, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 88%' }
     });
   });
-  $$('.sec-head .eyebrow, .sec-head .sec-note').forEach(function (el) {
-    gsap.from(el, {
-      opacity: 0, y: 14, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 92%' }
+
+  // content blocks
+  arrive('.thesis-body');
+  arrive('#ledger', { end: 'top 46%' });
+  arrive('.roles');
+  arrive('.filters, .skills');
+  arrive('.svc');
+  arrive('.creds');
+  arrive('.contact-grid');
+
+  // the hero recedes into the distance as you leave it
+  var heroEl = $('.hero');
+  if (heroEl) {
+    gsap.to('.hero-name', {
+      rotationX: deep ? 24 : 14, z: deep ? -320 : -140, yPercent: -12, opacity: 0.18,
+      transformPerspective: 1100, transformOrigin: '50% 0%', ease: 'none',
+      scrollTrigger: { trigger: heroEl, start: 'top top', end: 'bottom 35%', scrub: 0.8 }
+    });
+    gsap.to('.hero-fig', {
+      rotationX: deep ? 12 : 6, z: deep ? -180 : -80, y: 40, opacity: 0.35,
+      transformPerspective: 1100, transformOrigin: '50% 0%', ease: 'none',
+      scrollTrigger: { trigger: heroEl, start: '40% top', end: 'bottom 20%', scrub: 0.8 }
+    });
+  }
+
+  // depth field: nearer orbs travel further over the length of the page
+  var orbTravel = [-55, -130, -210];
+  $$('.orb').forEach(function (orb, i) {
+    gsap.to(orb, {
+      yPercent: orbTravel[i] || -100, scale: 1 + i * 0.12, ease: 'none',
+      scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1.2 }
     });
   });
 
-  /* general reveals */
-  $$('[data-rv]').forEach(function (el) {
-    gsap.from(el, {
-      opacity: 0, y: 22, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' }
-    });
-  });
-  $$('[data-rv-group]').forEach(function (group) {
-    gsap.from(group.children, {
-      opacity: 0, y: 22, duration: 0.55, stagger: 0.07, ease: 'power2.out',
-      scrollTrigger: { trigger: group, start: 'top 85%' }
-    });
-  });
-  $$('.roles .role').forEach(function (el) {
-    gsap.from(el, {
-      opacity: 0, y: 20, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%' }
-    });
-  });
-
-  /* ledger: items rise out of the page in 3D, rules draw, numbers count */
+  /* ledger rules draw once it has arrived */
   var ledgerItems = $$('.ledger-item');
   if (ledgerItems.length) {
-    gsap.from(ledgerItems, {
-      opacity: 0, y: 34, rotationX: -22, transformPerspective: 1000,
-      duration: 0.9, stagger: 0.09, ease: 'power3.out',
-      scrollTrigger: { trigger: '#ledger', start: 'top 82%' },
-      onComplete: function () { gsap.set(ledgerItems, { clearProps: 'rotationX' }); }
-    });
     ScrollTrigger.create({
-      trigger: '#ledger', start: 'top 82%', once: true,
+      trigger: '#ledger', start: 'top 70%', once: true,
       onEnter: function () { ledgerItems.forEach(function (el) { el.classList.add('in'); }); }
     });
   }
@@ -550,6 +568,12 @@
       });
     }
   }
+
+  /* Triggers were created in code order, but the pinned dial sits above most of them
+     on the page and its pin spacer pushes everything below it down. Sorting by page
+     position before refreshing makes every later trigger include that spacer. */
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
 
   /* fonts and images shift layout: recalc once settled */
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });

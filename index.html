@@ -64,6 +64,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 ::selection{background:var(--fuchsia);color:var(--void)}
 :focus-visible{outline:2px solid var(--fuchsia);outline-offset:4px;border-radius:2px}
 
+/* 3D-transformed blocks paint past the edge while tilted. Clipping the section
+   containers (not html/body, which would stop the viewport scrolling in Chromium)
+   keeps that ink from widening the page or the mobile layout viewport. clip creates
+   no scroll container, so sticky cards and the pinned dial still track the viewport. */
+main,.contact,.foot{overflow-x:clip}
+
 .wrap{max-width:1320px;margin:0 auto;padding-inline:var(--gut)}
 
 /* grain + ambient glow */
@@ -208,6 +214,15 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .thesis-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,5vw,76px);margin-top:clamp(36px,5vw,58px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--line)}
 .thesis-body p{color:var(--bone-dim);font-size:15.5px;line-height:1.85}
 .thesis-body strong{color:var(--bone);font-weight:600}
+
+/* ---------- depth field: three soft orbs at different scroll speeds ---------- */
+.depth{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(64px);will-change:transform;opacity:.9}
+.orb-1{width:48vw;height:48vw;left:-14vw;top:22vh;background:radial-gradient(circle,rgba(255,46,136,.26),transparent 66%)}
+.orb-2{width:40vw;height:40vw;right:-12vw;top:58vh;background:radial-gradient(circle,rgba(232,180,85,.20),transparent 66%)}
+.orb-3{width:30vw;height:30vw;left:36vw;top:88vh;background:radial-gradient(circle,rgba(76,125,255,.17),transparent 66%)}
+/* blocks that travel through depth on scroll */
+.d3{will-change:transform,opacity}
 
 /* ---------- depth helpers ---------- */
 .glare{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0;transition:opacity .35s var(--ease)}
@@ -454,6 +469,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* ---------- responsive ---------- */
 @media(max-width:920px){
   /* capability: a compact chip cloud instead of 28 stacked cards */
+  .orb{filter:blur(44px)}
+  .orb-1{width:90vw;height:90vw;left:-30vw}
+  .orb-2{width:70vw;height:70vw;right:-25vw}
+  .orb-3{display:none}
   .skills{display:flex;flex-wrap:wrap;gap:8px;background:none;border:0}
   .skill{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:transparent;flex-direction:row;gap:0}
   .skill em{display:none}
@@ -506,6 +525,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 @media(prefers-reduced-motion:reduce){
   .curtain{display:none!important}
   .stamp svg{animation:none}
+  .orb{will-change:auto}
   .ledger-rule{transform:scaleX(1);transition:none}
   .dial.ready #dial::-webkit-slider-thumb{animation:none}
   .step{position:static}
@@ -522,6 +542,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 </style>
 </head>
 <body>
+<div class="depth" aria-hidden="true">
+  <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+</div>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" id="prog" aria-hidden="true"></div>
 
@@ -635,8 +658,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 
   <div class="thesis-body">
-    <p data-rv>Two years and eight months at Accenture built the rigour: reading patterns in high-volume data, owning stakeholder reporting, delivering under strict SLAs. That is where I learned to <strong>separate signal from noise under time pressure</strong>, the same discipline that now drives how I read a campaign and an audience.</p>
-    <p data-rv>Times OOH and Label Simran Anand applied it to live briefs, content strategy and market research. For AKS Architecture Studio I designed and shipped the website, the Postgres content model and a custom CMS, then took ownership of the studio's social channels: <strong>strategy through to the thing that actually runs in production</strong>.</p>
+    <p>Two years and eight months at Accenture built the rigour: reading patterns in high-volume data, owning stakeholder reporting, delivering under strict SLAs. That is where I learned to <strong>separate signal from noise under time pressure</strong>, the same discipline that now drives how I read a campaign and an audience.</p>
+    <p>Times OOH and Label Simran Anand applied it to live briefs, content strategy and market research. For AKS Architecture Studio I designed and shipped the website, the Postgres content model and a custom CMS, then took ownership of the studio's social channels: <strong>strategy through to the thing that actually runs in production</strong>.</p>
   </div>
 </section>
 
@@ -912,7 +935,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     </div>
     <p class="sec-note">A small number of independent engagements alongside full-time work.</p>
   </div>
-  <div class="svc" data-rv-group>
+  <div class="svc">
     <div class="svc-item" data-tilt="5">
       <span class="glare" aria-hidden="true"></span>
       <span class="svc-n">01</span>
@@ -942,7 +965,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <h2 class="sec-title">Education &amp; <i>certification</i></h2>
     </div>
   </div>
-  <dl class="fields creds" data-rv-group>
+  <dl class="fields creds">
     <div class="field"><dt class="fk">Degree</dt><dd class="fv"><b>B.Tech, Electronics and Instrumentation</b>, Thapar Institute of Engineering &amp; Technology, 2019 to 2023</dd></div>
     <div class="field"><dt class="fk">Patent</dt><dd class="fv"><b>Granted, co-inventor:</b> <i>A System of Non-Invasive Diagnosis for Diabetes and Dyspepsia Detection using ECG Signal</i></dd></div>
     <div class="field"><dt class="fk">Certificate</dt><dd class="fv"><b>Google Digital Marketing &amp; E-commerce</b>, in progress. Foundations, Attract and Engage Customers, and From Likes to Leads completed Jul to Aug 2026</dd></div>
