@@ -52,6 +52,22 @@
     });
   }
 
+  // In-page links scroll smoothly via JS. The CSS scroll-behavior property is
+  // deliberately not used: it animates ScrollTrigger's own measurement scrolls
+  // during refresh() and leaves the page at the top.
+  var navOffset = function () { return nav.offsetHeight + 12; };
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      var top = id === 'top' ? 0 : target.getBoundingClientRect().top + window.scrollY - navOffset();
+      window.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+    });
+  });
+
   $('#yr').textContent = new Date().getFullYear();
 
   /* ---------------- local time in the footer ---------------- */
@@ -120,13 +136,26 @@
     head.addEventListener('click', function () {
       var willOpen = !role.classList.contains('is-open');
 
-      // one open at a time keeps the list scannable
+      // One open at a time keeps the list scannable. A panel collapsing ABOVE the
+      // tapped role would shift the whole page up under the reader's thumb (Safari
+      // has no scroll anchoring), so those close instantly and the scroll position
+      // is moved by exactly the same amount in the same frame: no visible jump.
+      var keep = head.getBoundingClientRect().top;
+      var collapsedAbove = false;
       $$('#roles .role.is-open').forEach(function (other) {
         if (other === role) return;
+        var otherPanel = $('.role-panel', other);
+        var isAbove = !!(other.compareDocumentPosition(role) & Node.DOCUMENT_POSITION_FOLLOWING);
+        collapsedAbove = collapsedAbove || isAbove;
         other.classList.remove('is-open');
         $('.role-head', other).setAttribute('aria-expanded', 'false');
-        setPanel($('.role-panel', other), false, !panelsReady);
+        setPanel(otherPanel, false, isAbove || !panelsReady);
       });
+      if (collapsedAbove) {
+        // reading the rect forces layout, so this is the heading's real new position
+        var drift = head.getBoundingClientRect().top - keep;
+        if (drift) window.scrollTo({ top: Math.max(0, window.scrollY + drift), behavior: 'auto' });
+      }
 
       role.classList.toggle('is-open', willOpen);
       head.setAttribute('aria-expanded', String(willOpen));
@@ -336,6 +365,43 @@
     if (!document.hidden) setTimeout(liftCurtain, 2600);
   });
 
+  /* perspective tilt with a light glare: portrait, ledger, service cards */
+  if (finePointer) {
+    $$('[data-tilt]').forEach(function (el) {
+      var strength = parseFloat(el.dataset.tilt) || 6;
+      var glare = el.querySelector('.glare');
+      gsap.set(el, { transformPerspective: 900 });
+      var rx = gsap.quickTo(el, 'rotationX', { duration: 0.55, ease: 'power3.out' });
+      var ry = gsap.quickTo(el, 'rotationY', { duration: 0.55, ease: 'power3.out' });
+      var ty = gsap.quickTo(el, 'y', { duration: 0.55, ease: 'power3.out' });
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        rx(-py * strength * 2);
+        ry(px * strength * 2);
+        ty(-4);
+        if (glare) glare.style.background =
+          'radial-gradient(circle at ' + ((px + 0.5) * 100) + '% ' + ((py + 0.5) * 100) + '%, rgba(255,255,255,.16), transparent 58%)';
+      });
+      el.addEventListener('mouseleave', function () { rx(0); ry(0); ty(0); });
+    });
+  }
+
+  /* the stamp leans with the pointer anywhere over the hero */
+  var stamp = $('#stamp');
+  if (stamp && finePointer && hero) {
+    gsap.set(stamp, { transformPerspective: 700 });
+    var sx = gsap.quickTo(stamp, 'rotationX', { duration: 0.9, ease: 'power3.out' });
+    var sy = gsap.quickTo(stamp, 'rotationY', { duration: 0.9, ease: 'power3.out' });
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      sx(-((e.clientY - r.top) / r.height - 0.5) * 34);
+      sy(((e.clientX - r.left) / r.width - 0.5) * 34);
+    });
+    hero.addEventListener('mouseleave', function () { sx(0); sy(0); });
+  }
+
   /* magnetic buttons: pointer devices only, and only on the few focal CTAs */
   if (finePointer) {
     $$('.magnetic').forEach(function (el) {
@@ -404,6 +470,32 @@
     gsap.from(el, {
       opacity: 0, y: 20, duration: 0.6, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+
+  /* ledger: items rise out of the page in 3D, rules draw, numbers count */
+  var ledgerItems = $$('.ledger-item');
+  if (ledgerItems.length) {
+    gsap.from(ledgerItems, {
+      opacity: 0, y: 34, rotationX: -22, transformPerspective: 1000,
+      duration: 0.9, stagger: 0.09, ease: 'power3.out',
+      scrollTrigger: { trigger: '#ledger', start: 'top 82%' },
+      onComplete: function () { gsap.set(ledgerItems, { clearProps: 'rotationX' }); }
+    });
+    ScrollTrigger.create({
+      trigger: '#ledger', start: 'top 82%', once: true,
+      onEnter: function () { ledgerItems.forEach(function (el) { el.classList.add('in'); }); }
+    });
+  }
+
+  /* process cards recede as the next one stacks over them */
+  var steps = $$('.step');
+  steps.forEach(function (card, i) {
+    var next = steps[i + 1];
+    if (!next) return;
+    gsap.to(card, {
+      scale: 0.94, rotationX: -5, opacity: 0.45, transformPerspective: 1000, ease: 'none',
+      scrollTrigger: { trigger: next, start: 'top bottom-=60', end: 'top top+=160', scrub: true }
     });
   });
 
