@@ -116,7 +116,14 @@ main,.contact,.foot{overflow-x:clip}
   background:rgba(11,9,16,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   padding-block:13px;box-shadow:0 1px 0 var(--line);
 }
-.nav-mark{font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.04em}
+/* A backdrop-filter makes the nav the containing block for its position:fixed
+   descendants, which collapses the mobile menu panel to the height of the bar.
+   The full-screen panel hides whatever is behind it anyway, so drop the blur
+   while the menu is open. */
+.nav.is-open,.nav.is-open.is-stuck{
+  background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;
+}
+.nav-mark{position:relative;z-index:110;font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.04em}
 .nav-mark span{color:var(--fuchsia)}
 .nav-list{display:flex;gap:30px;align-items:center}
 .nav-list a{
