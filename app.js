@@ -180,17 +180,23 @@
       });
 
       var shown = 0;
+      var visible = [];
       skills.forEach(function (s) {
         var match = f === 'all' || s.dataset.c === f;
-        if (match) shown++;
-        s.style.display = match ? '' : 'none';
+        if (match) { shown++; visible.push(s); }
+        // a class, not an inline style: GSAP writes inline transform resets onto
+        // these elements and any selector reading the style attribute would collide
+        s.classList.toggle('is-off', !match);
       });
 
       if (animate) {
-        gsap.fromTo(skills.filter(function (s) { return s.style.display !== 'none'; }),
+        gsap.fromTo(visible,
           { opacity: 0, y: 10 },
           { opacity: 1, y: 0, duration: 0.34, stagger: 0.02, ease: 'power2.out', overwrite: true });
       }
+
+      // filtering changes the section height, which moves every trigger below it
+      if (window.ScrollTrigger) requestAnimationFrame(function () { ScrollTrigger.refresh(); });
 
       if (!shown) {
         if (!emptyNote) {
