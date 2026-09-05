@@ -33,17 +33,28 @@
   list.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-  // highlight the section currently in the middle of the viewport
+  // slim section index on the right edge (hidden on small screens by CSS)
   var navLinks = $$('.nav-list a[href^="#"]');
+  var dots = document.createElement('nav');
+  dots.className = 'dots';
+  dots.setAttribute('aria-label', 'Sections');
+  dots.innerHTML = navLinks.map(function (a) {
+    return '<a href="' + a.getAttribute('href') + '"><span>' + a.textContent + '</span><i aria-hidden="true"></i></a>';
+  }).join('');
+  document.body.appendChild(dots);
+  var dotLinks = $$('a', dots);
+
+  // highlight the section currently in the middle of the viewport
   if ('IntersectionObserver' in window) {
     var byId = {};
-    navLinks.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    navLinks.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = [a]; });
+    dotLinks.forEach(function (a) { var id = a.getAttribute('href').slice(1); if (byId[id]) byId[id].push(a); });
     var secObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
-        navLinks.forEach(function (a) { a.classList.remove('is-active'); });
-        var a = byId[en.target.id];
-        if (a) a.classList.add('is-active');
+        navLinks.concat(dotLinks).forEach(function (a) { a.classList.remove('is-active'); });
+        (byId[en.target.id] || []).forEach(function (a) { a.classList.add('is-active'); });
+        dots.classList.toggle('on-light', en.target.id === 'contact');
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
     Object.keys(byId).forEach(function (id) {
@@ -281,17 +292,44 @@
   /* ---------------- everything below needs GSAP ---------------- */
   if (!animate) { if (dial) $('.dial').classList.add('ready'); return; }
 
-  /* hero: split the name into characters and lift them in */
-  $$('[data-split]').forEach(function (el) {
-    var text = el.textContent;
-    el.textContent = '';
-    text.split('').forEach(function (ch) {
-      var s = document.createElement('span');
-      s.className = 'ch';
-      s.textContent = ch;
-      el.appendChild(s);
+  /* split text into character spans while keeping any inline elements intact */
+  function splitChars(root) {
+    var out = [], nodes = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var frag = document.createDocumentFragment();
+      n.textContent.split('').forEach(function (ch) {
+        var s = document.createElement('span');
+        s.className = 'ch';
+        s.textContent = ch;
+        frag.appendChild(s);
+        out.push(s);
+      });
+      n.parentNode.replaceChild(frag, n);
     });
-  });
+    return out;
+  }
+  /* letters lean and skew toward the pointer */
+  function attachLean(container, chars, lift, skew) {
+    var qs = chars.map(function (c) {
+      return { el: c, y: gsap.quickTo(c, 'y', { duration: 0.6, ease: 'power3.out' }),
+                      sx: gsap.quickTo(c, 'skewX', { duration: 0.6, ease: 'power3.out' }) };
+    });
+    container.addEventListener('mousemove', function (e) {
+      qs.forEach(function (c) {
+        var r = c.el.getBoundingClientRect();
+        var pull = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / 260));
+        var near = Math.max(0, 1 - Math.abs(pull));
+        c.y(-lift * near);
+        c.sx(-skew * pull * near);
+      });
+    });
+    container.addEventListener('mouseleave', function () { qs.forEach(function (c) { c.y(0); c.sx(0); }); });
+  }
+
+  /* hero: split the name into characters and lift them in */
+  $$('[data-split]').forEach(function (el) { splitChars(el); });
   $$('.hero-name .ln').forEach(function (l) { l.setAttribute('aria-hidden', 'true'); });
 
   var intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
@@ -303,6 +341,7 @@
     .from('.hero-lede', { opacity: 0, y: 20, duration: 0.75 }, '-=0.75')
     .from('.hero .field', { opacity: 0, y: 14, duration: 0.55, stagger: 0.06 }, '-=0.55')
     .from('.hero .cta-row', { opacity: 0, y: 16, duration: 0.6 }, '-=0.35');
+  intro.eventCallback('onComplete', function () { gsap.set('.hero-name .ln', { overflow: 'visible' }); });
 
   /* ambient glow trails the pointer across the hero */
   var glow = $('#glow'), hero = $('.hero');
@@ -310,34 +349,26 @@
     gsap.set(glow, { xPercent: -50, yPercent: -50, left: '38%', top: '46%' });
     var gx = gsap.quickTo(glow, 'x', { duration: 1.1, ease: 'power3.out' });
     var gy = gsap.quickTo(glow, 'y', { duration: 1.1, ease: 'power3.out' });
+    var figEl = $('.hero-fig'), copyEl = $('.hero-copy');
+    var fx = gsap.quickTo(figEl, 'x', { duration: 0.9, ease: 'power3.out' });
+    var fy = gsap.quickTo(figEl, 'yPercent', { duration: 0.9, ease: 'power3.out' });
+    var cx = gsap.quickTo(copyEl, 'x', { duration: 0.9, ease: 'power3.out' });
+    var cy = gsap.quickTo(copyEl, 'y', { duration: 0.9, ease: 'power3.out' });
     hero.addEventListener('mousemove', function (e) {
       var r = hero.getBoundingClientRect();
       gx((e.clientX - r.left) - r.width * 0.38);
       gy((e.clientY - r.top) - r.height * 0.46);
+      if (!finePointer) return;
+      var nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+      fx(nx * 18); fy(ny * 1.6);      // the portrait is nearer: it moves with the pointer
+      cx(-nx * 9); cy(-ny * 7);       // the type sits further back: it moves against it
     });
+    hero.addEventListener('mouseleave', function () { fx(0); fy(0); cx(0); cy(0); });
   }
 
   /* hero letters lean toward the cursor */
   var nameEl = $('.hero-name');
-  if (nameEl && finePointer) {
-    var chars = $$('.hero-name .ch').map(function (c) {
-      return { el: c,
-               y: gsap.quickTo(c, 'y', { duration: 0.6, ease: 'power3.out' }),
-               sx: gsap.quickTo(c, 'skewX', { duration: 0.6, ease: 'power3.out' }) };
-    });
-    nameEl.addEventListener('mousemove', function (e) {
-      chars.forEach(function (c) {
-        var r = c.el.getBoundingClientRect();
-        var pull = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / 260));
-        var near = Math.max(0, 1 - Math.abs(pull));
-        c.y(-18 * near);
-        c.sx(-7 * pull * near);
-      });
-    });
-    nameEl.addEventListener('mouseleave', function () {
-      chars.forEach(function (c) { c.y(0); c.sx(0); });
-    });
-  }
+  if (nameEl && finePointer) attachLean(nameEl, $$('.hero-name .ch'), 18, 7);
 
   /* intro curtain: hold the hero until it lifts */
   var curtain = document.createElement('div');
@@ -492,6 +523,67 @@
       transformPerspective: 1100, transformOrigin: '50% 0%', ease: 'none',
       scrollTrigger: { trigger: heroEl, start: '40% top', end: 'bottom 20%', scrub: 0.8 }
     });
+    // each letter falls back a different distance, so the name breaks apart in depth
+    var heroChars = $$('.hero-name .ch');
+    gsap.set(heroChars, { transformPerspective: 900 });
+    gsap.to(heroChars, {
+      z: function (i) { return -(90 + (i * 37) % 170); },
+      rotationX: function (i) { return 8 + (i * 7) % 16; },
+      rotationY: function (i) { return ((i * 11) % 22) - 11; },
+      opacity: 0.12, ease: 'none',
+      scrollTrigger: { trigger: heroEl, start: 'top top', end: 'bottom 35%', scrub: 0.8 }
+    });
+    // the portrait is monochrome at rest and blooms into colour in the first few hundred
+    // pixels of scrolling, so phones see it in colour too (hover still works on desktop)
+    gsap.fromTo('.hero-fig', { '--mono-scroll': 1 }, {
+      '--mono-scroll': 0, ease: 'none',
+      scrollTrigger: { trigger: heroEl, start: 'top top', end: 'top -=320', scrub: 0.4 }
+    });
+  }
+
+  /* approach: words light up one by one as you read down the paragraph */
+  $$('.thesis-body p').forEach(function (p) {
+    var words = [], nodes = [];
+    var walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var s = document.createElement('span'); s.className = 'w'; s.textContent = part;
+        frag.appendChild(s); words.push(s);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+    gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 78%', end: 'bottom 45%', scrub: 0.5 } })
+      .fromTo(words, { opacity: 0.22 }, { opacity: 1, duration: 1, stagger: 0.06, ease: 'none' });
+  });
+
+  /* section heads: the rule draws in; the italic word floats at its own depth */
+  $$('.sec-head').forEach(function (head) {
+    gsap.fromTo(head, { '--rule': 0 }, { '--rule': 1, ease: 'none',
+      scrollTrigger: { trigger: head, start: 'top 92%', end: 'top 58%', scrub: 0.5 } });
+    var it = $('.sec-title i', head);
+    if (it) gsap.fromTo(it, { z: -70, y: 12, transformPerspective: 600 }, { z: 30, y: -6, ease: 'none',
+      scrollTrigger: { trigger: head, start: 'top 95%', end: 'top 25%', scrub: 0.6 } });
+  });
+
+  /* contact: the bone section rises as a sheet, and the heading's letters rise and lean */
+  var contactEl = $('.contact');
+  if (contactEl) {
+    gsap.fromTo(contactEl,
+      { y: 70, scale: 0.965, borderTopLeftRadius: 30, borderTopRightRadius: 30 },
+      { y: 0, scale: 1, borderTopLeftRadius: 0, borderTopRightRadius: 0, ease: 'none',
+        scrollTrigger: { trigger: contactEl, start: 'top 96%', end: 'top 40%', scrub: 0.6 } });
+    var ch2 = $('.contact-h');
+    if (ch2) {
+      ch2.setAttribute('aria-label', ch2.textContent.trim());
+      var cChars = splitChars(ch2);
+      gsap.from(cChars, { yPercent: 70, opacity: 0, stagger: 0.03, ease: 'none',
+        scrollTrigger: { trigger: contactEl, start: 'top 88%', end: 'top 38%', scrub: 0.5 } });
+      if (finePointer) attachLean(ch2, cChars, 14, 6);
+    }
   }
 
   // depth field: nearer orbs travel further over the length of the page

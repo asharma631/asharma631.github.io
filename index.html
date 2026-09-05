@@ -91,17 +91,20 @@ main,.contact,.foot{overflow-x:clip}
 }
 .eyebrow::before{content:'';width:26px;height:1px;background:var(--fuchsia)}
 .sec-head{
+  position:relative;--rule:0;
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:28px;flex-wrap:wrap;
   padding-bottom:22px;border-bottom:1px solid var(--line);
   margin-bottom:clamp(40px,6vw,72px);
 }
+.sec-head::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,var(--fuchsia),var(--gold) 55%,transparent);transform:scaleX(var(--rule));transform-origin:left}
 .sec-title{
   font-family:var(--display);font-weight:400;
   font-size:clamp(30px,5vw,64px);line-height:1;letter-spacing:-.008em;
   text-transform:uppercase;margin-top:16px;
 }
-.sec-title i{font-family:var(--editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.01em;color:var(--gold)}
+.sec-title i{display:inline-block;font-family:var(--editorial);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.01em;color:var(--gold)}
 .sec-note{font-family:var(--label);font-size:11px;letter-spacing:.05em;color:var(--bone-dim);max-width:32ch;line-height:1.8}
 .sec{padding-block:var(--stack)}
 .sec-tight{padding-block:clamp(60px,8vw,110px)}
@@ -155,6 +158,7 @@ main,.contact,.foot{overflow-x:clip}
   text-transform:uppercase;
 }
 .hero-name .ln{display:block;overflow:hidden;padding-bottom:.06em;white-space:nowrap}
+.ch{display:inline-block;white-space:pre}
 .hero-name .ch{display:inline-block}
 .hero-name .l2{font-style:italic;font-weight:400;color:var(--gold);letter-spacing:.005em}
 .hero-rule{height:2px;background:linear-gradient(90deg,var(--fuchsia),var(--gold) 60%,transparent);margin:clamp(26px,3.6vw,44px) 0 clamp(32px,4.6vw,54px);transform-origin:left}
@@ -162,15 +166,15 @@ main,.contact,.foot{overflow-x:clip}
 .hero-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,34%);gap:clamp(28px,5vw,72px);align-items:stretch}
 .hero-copy{min-width:0}
 .hero-fields{margin-top:clamp(36px,5vw,64px)}
-.hero-portrait{position:relative;overflow:hidden;border:1px solid var(--line);width:100%;height:100%;min-height:380px;margin:0}
-.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:grayscale(1) contrast(1.12) brightness(.9);transition:filter .7s var(--ease);will-change:transform}
+.hero-fig{--mono-scroll:1}
+.hero-portrait{--mono:var(--mono-scroll);position:relative;overflow:hidden;border:1px solid var(--line);width:100%;height:100%;min-height:380px;margin:0}
+.hero-portrait:hover{--mono:0}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:grayscale(var(--mono)) contrast(calc(1 + .12 * var(--mono))) brightness(calc(1 - .1 * var(--mono)));transition:filter .45s var(--ease);will-change:transform}
 .hero-portrait::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(160deg,rgba(255,46,136,.34),transparent 46%,rgba(196,176,245,.24));
-  mix-blend-mode:overlay;transition:opacity .7s var(--ease);
+  mix-blend-mode:overlay;opacity:var(--mono);transition:opacity .45s var(--ease);
 }
-.hero-portrait:hover img{filter:grayscale(0) contrast(1) brightness(1)}
-.hero-portrait:hover::after{opacity:0}
 .hero-cap{font-family:var(--label);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--bone-dim);margin-top:12px}
 
 .hero-lede{
@@ -222,6 +226,7 @@ main,.contact,.foot{overflow-x:clip}
   background:linear-gradient(96deg,var(--fuchsia),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .thesis-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,5vw,76px);margin-top:clamp(36px,5vw,58px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--line)}
 .thesis-body p{color:var(--bone-dim);font-size:15.5px;line-height:1.85}
+.thesis-body p .w{display:inline}
 .thesis-body strong{color:var(--bone);font-weight:600}
 
 /* ---------- depth field: three soft orbs at different scroll speeds ---------- */
@@ -351,7 +356,7 @@ main,.contact,.foot{overflow-x:clip}
 .creds .fv i{font-family:var(--editorial);font-style:italic;color:var(--gold)}
 
 /* ---------- contact (inverted) ---------- */
-.contact{background:var(--bone);color:var(--void);padding-block:var(--stack);position:relative;z-index:2}
+.contact{background:var(--bone);color:var(--void);padding-block:var(--stack);position:relative;z-index:2;will-change:transform}
 .contact .eyebrow{color:var(--fuchsia-dp)}
 .contact .eyebrow::before{background:var(--fuchsia-dp)}
 .contact-h{font-family:var(--display);font-weight:400;font-size:clamp(40px,10vw,146px);line-height:.9;letter-spacing:-.015em;text-transform:uppercase;margin:clamp(22px,3vw,34px) 0 clamp(32px,4.4vw,50px)}
@@ -478,8 +483,21 @@ main,.contact,.foot{overflow-x:clip}
 }
 .dial-proof strong{color:var(--bone);font-weight:600}
 
+/* ---------- side section index ---------- */
+.dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.dots a{display:flex;align-items:center;gap:10px;min-height:24px;padding:2px 0;color:var(--bone-dim)}
+.dots a span{font-family:var(--label);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;opacity:0;transform:translateX(6px);transition:opacity .25s,transform .3s var(--ease),color .3s}
+.dots a i{width:6px;height:6px;border-radius:50%;background:var(--bone-dim);opacity:.55;flex:none;transition:transform .3s var(--ease),background .3s,opacity .3s}
+.dots:hover a span{opacity:1;transform:none}
+.dots a.is-active i{background:var(--fuchsia);opacity:1;transform:scale(1.7)}
+.dots a.is-active span{opacity:1;transform:none;color:var(--bone)}
+.dots.on-light a i{background:rgba(11,9,16,.4)}
+.dots.on-light a.is-active i{background:var(--fuchsia-dp)}
+.dots.on-light a span,.dots.on-light a.is-active span{color:rgba(11,9,16,.75)}
+
 /* ---------- responsive ---------- */
 @media(max-width:920px){
+  .dots{display:none}
   /* capability: a compact chip cloud instead of 28 stacked cards */
   .orb{filter:blur(44px)}
   .orb-1{width:90vw;height:90vw;left:-30vw}
