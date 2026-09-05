@@ -426,6 +426,8 @@ main,.contact,.foot{overflow-x:clip}
 }
 .copy-btn:hover{border-color:var(--fuchsia-dp);color:var(--fuchsia-dp)}
 .copy-btn.done{background:var(--fuchsia-dp);border-color:var(--fuchsia-dp);color:var(--bone)}
+/* thumbs need more than 30px */
+@media(hover:none){.copy-btn{min-height:40px;padding:9px 14px}}
 
 /* ---------- the dial ---------- */
 .dial{margin-top:clamp(30px,4vw,44px)}
@@ -1004,9 +1006,9 @@ main,.contact,.foot{overflow-x:clip}
         </div>
       </div>
       <dl class="fields">
-        <div class="field"><dt class="fk">Email</dt><dd class="fv fv-row"><a href="mailto:aishanis.work@gmail.com">aishanis.work@gmail.com</a><button class="copy-btn" type="button" data-copy="aishanis.work@gmail.com">Copy</button></dd></div>
+        <div class="field"><dt class="fk">Email</dt><dd class="fv fv-row"><a href="mailto:aishanis.work@gmail.com">aishanis.work@gmail.com</a><button class="copy-btn" type="button" data-copy="aishanis.work@gmail.com" aria-label="Copy email address">Copy</button></dd></div>
         <div class="field"><dt class="fk">Alt email</dt><dd class="fv"><a href="mailto:aishani631@gmail.com">aishani631@gmail.com</a></dd></div>
-        <div class="field"><dt class="fk">Phone</dt><dd class="fv"><a href="tel:+919988383371">+91 99883 83371</a></dd></div>
+        <div class="field"><dt class="fk">Phone</dt><dd class="fv fv-row"><a href="tel:+919988383371">+91 99883 83371</a><button class="copy-btn" type="button" data-copy="+91 99883 83371" aria-label="Copy phone number">Copy</button></dd></div>
         <div class="field"><dt class="fk">LinkedIn</dt><dd class="fv"><a href="https://www.linkedin.com/in/aishanisharma631" target="_blank" rel="noopener">/in/aishanisharma631</a></dd></div>
         <div class="field"><dt class="fk">Based</dt><dd class="fv">Gurugram, Delhi NCR, India</dd></div>
       </dl>
